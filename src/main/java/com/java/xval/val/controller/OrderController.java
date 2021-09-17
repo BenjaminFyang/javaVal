@@ -30,10 +30,6 @@ public class OrderController {
     @PostMapping(value = "/add")
     @ApiOperation(httpMethod = "POST", value = "添加", response = Boolean.class)
     public CommonResult<String> addEmergency(@ApiParam(required = true) @RequestBody @Validated({AddParam.class}) OrderDTO orderDTO) {
-
-
-
-
         return CommonResult.success("添加订单成功");
     }
 
