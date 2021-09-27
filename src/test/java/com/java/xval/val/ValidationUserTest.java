@@ -33,7 +33,6 @@ public class ValidationUserTest {
         user.setAge(50);
         user.setPrice(new BigDecimal("34563.33"));
 
-
         // validate方法来验证我们的 UserBean User对象中定义的约束都将作为Set返回
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         for (ConstraintViolation<User> violation : violations) {

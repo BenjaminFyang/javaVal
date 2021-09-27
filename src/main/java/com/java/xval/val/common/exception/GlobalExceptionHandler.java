@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-
     @ResponseBody
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public CommonResult<String> handleValidException(MethodArgumentNotValidException e) {

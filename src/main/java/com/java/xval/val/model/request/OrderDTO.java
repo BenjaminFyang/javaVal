@@ -50,9 +50,10 @@ public class OrderDTO {
     @ApiModelProperty(value = "礼品卡集合")
     List<OrderNextCardDTO> orderNextCardDTOList;
 
-
     /**
      * 下单网站
+     *
+     * @see com.java.xval.val.common.enums.OrderWebsiteEnum
      */
     @ValueOfEnum(enumClass = OrderWebsiteEnum.class, groups = {AddParam.class}, message = "对应的下单网站不存在")
     private OrderWebsiteEnum orderWebsite;
