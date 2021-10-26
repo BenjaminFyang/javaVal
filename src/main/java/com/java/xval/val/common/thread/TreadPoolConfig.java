@@ -43,7 +43,7 @@ public class TreadPoolConfig {
     public ExecutorService buildConsumerQueueThreadPool() {
 
         ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().
-                setNameFormat("consumer-queue_one-thread-%d")
+                setNameFormat("com.java.xval.val.common.consumer-queue_one-thread-%d")
                 .build();
 
         ExecutorService executorService = buildExecutor(namedThreadFactory);
@@ -68,7 +68,7 @@ public class TreadPoolConfig {
     @Bean(value = "consumerQueueTwoThreadPool")
     public ExecutorService newExecutor() {
         ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().
-                setNameFormat("consumer-queue_two-thread-%d")
+                setNameFormat("com.java.xval.val.common.consumer-queue_two-thread-%d")
                 .build();
 
         ExecutorService executorService = buildExecutor(namedThreadFactory);
