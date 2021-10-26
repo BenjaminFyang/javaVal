@@ -37,9 +37,6 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private OrderTransactionProducer orderTransactionProducer;
 
-    Logger logger = LoggerFactory.getLogger(this.getClass());
-
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void create(Order order, String transactionId) {
@@ -55,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
         log.setBusiness(MqConstant.Top.USER_ORDER_TOPIC);
         log.setForeignKey(String.valueOf(order.getId()));
         transactionLogMapper.insert(log);
-        logger.info("OrderServiceImpl订单创建完成={}", order);
+        LOGGER.info("OrderServiceImpl订单创建完成={}", order);
     }
 
     @Override
