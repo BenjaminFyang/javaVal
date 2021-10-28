@@ -1,6 +1,6 @@
 package com.java.xval.val.common.config;
 
-import com.java.xval.val.mq.RocketMqHelper;
+import com.java.xval.val.mq.RocketMQTemplateProducer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class RocketMqAutoConfiguration {
 
     @Bean
-    public RocketMqHelper rocketMqHelper() {
-        return new RocketMqHelper();
+    public RocketMQTemplateProducer rocketMqHelper() {
+        return new RocketMQTemplateProducer();
     }
 }

@@ -12,7 +12,6 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.UUID;
@@ -26,12 +25,13 @@ import java.util.UUID;
  * @see https://ojuejin.cn/post/6850418115382738958
  * @since 2021-10-20
  */
-public class RocketMqHelper {
+
+public class RocketMQTemplateProducer {
 
     /**
      * 日志
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(RocketMqHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RocketMQTemplateProducer.class);
 
     /**
      * rocketmq模板注入

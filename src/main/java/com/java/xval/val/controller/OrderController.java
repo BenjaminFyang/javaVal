@@ -1,17 +1,17 @@
 package com.java.xval.val.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.java.xval.val.common.api.CommonResult;
 import com.java.xval.val.model.Order;
 import com.java.xval.val.model.request.OrderDTO;
 import com.java.xval.val.model.request.validation.AddParam;
 import com.java.xval.val.model.request.validation.UpdateParam;
-import com.java.xval.val.mq.RocketMqHelper;
+import com.java.xval.val.mq.RocketMQTemplateProducer;
 import com.java.xval.val.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.client.MQHelper;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public class OrderController {
     private OrderService orderService;
 
     @Resource
-    private RocketMqHelper rocketMqHelper;
+    private RocketMQTemplateProducer rocketMqHelper;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -69,11 +69,21 @@ public class OrderController {
 
     @PostMapping("/delayQueue")
     @ApiOperation(httpMethod = "POST", value = "延时队列测试", response = Boolean.class)
-    public CommonResult<String> delayQueue(@RequestBody Order order) throws MQClientException {
-        String message = "测试延时队列....";
-        rocketMqHelper.asyncSendDelay("topic-orderly", MessageBuilder.withPayload(message).build(), 3000, 3);
+    public CommonResult<String> delayQueue(@RequestBody Order order) {
+        rocketMqHelper.asyncSendDelay("topic-orderly", MessageBuilder.withPayload(order).build(), 3000, 3);
         return CommonResult.success("延时队列发动成功");
     }
 
 
+    /**
+     * 发送事务消息
+     *
+     * @return CommonResult
+     */
+    @PostMapping("/transactionMessage")
+    @ApiOperation(httpMethod = "POST", value = "事务消息", response = Boolean.class)
+    public CommonResult<String> sendMessageInTransactionMessage(@RequestBody Order order) {
+        rocketMqHelper.sendMessageInTransaction("transaction-message", order);
+        return CommonResult.success("success：已发送事务消息：message = " + JSON.toJSONString(order));
+    }
 }

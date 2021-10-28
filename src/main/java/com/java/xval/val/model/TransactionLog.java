@@ -3,6 +3,7 @@ package com.java.xval.val.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -33,5 +34,6 @@ public class TransactionLog implements Serializable {
     @ApiModelProperty(value = "对应业务表中的主键")
     private String foreignKey;
 
-
+    public TransactionLog() {
+    }
 }
