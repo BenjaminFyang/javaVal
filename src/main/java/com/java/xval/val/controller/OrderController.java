@@ -5,14 +5,17 @@ import com.java.xval.val.model.Order;
 import com.java.xval.val.model.request.OrderDTO;
 import com.java.xval.val.model.request.validation.AddParam;
 import com.java.xval.val.model.request.validation.UpdateParam;
+import com.java.xval.val.mq.RocketMqHelper;
 import com.java.xval.val.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.MQHelper;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +40,9 @@ public class OrderController {
     @Resource
     private OrderService orderService;
 
+    @Resource
+    private RocketMqHelper rocketMqHelper;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostMapping(value = "/add")
@@ -53,10 +59,21 @@ public class OrderController {
 
 
     @PostMapping("/createOrder")
-    @ApiOperation(httpMethod = "POST", value = "创建订单", response = Boolean.class)
+    @ApiOperation(httpMethod = "POST", value = "创建订单分布式事务测试", response = Boolean.class)
     public CommonResult<String> createOrder(@RequestBody Order order) throws MQClientException {
         logger.info("接收到订单数据：{}", order);
         orderService.createOrder(order);
         return CommonResult.success("订单创建中");
     }
+
+
+    @PostMapping("/delayQueue")
+    @ApiOperation(httpMethod = "POST", value = "延时队列测试", response = Boolean.class)
+    public CommonResult<String> delayQueue(@RequestBody Order order) throws MQClientException {
+        String message = "测试延时队列....";
+        rocketMqHelper.asyncSendDelay("topic-orderly", MessageBuilder.withPayload(message).build(), 3000, 3);
+        return CommonResult.success("延时队列发动成功");
+    }
+
+
 }
